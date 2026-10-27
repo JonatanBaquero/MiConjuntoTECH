@@ -1,0 +1,11 @@
+# Credenciales
+.env
+backend/.env
+
+# Entorno virtual de Python
+venv/
+backend/venv/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
