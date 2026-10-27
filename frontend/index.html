@@ -77,6 +77,7 @@
                             <th scope="col">Anuncio</th>
                             <th scope="col">Fecha de publicación</th>
                             <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
 
@@ -86,14 +87,79 @@
                 </table>
             </div>
 
-            <div>
-                <button
-                    type="button"
-                    class="btn-salir"
-                    onclick="alert('La creación de anuncios se implementará en el siguiente paso.')">
-                    Crear anuncio
-                </button>
-            </div>
+           
+<div>
+    <button
+        type="button"
+        class="btn-salir"
+        id="btn-mostrar-formulario">
+        Crear anuncio
+    </button>
+</div>
+
+<!-- Formulario para crear un anuncio -->
+<section id="seccion-crear-anuncio" hidden>
+    <h2>Nuevo anuncio</h2>
+
+    <form id="form-crear-anuncio">
+        <div>
+            <label for="titulo">Título del anuncio</label>
+            <input
+                type="text"
+                id="titulo"
+                name="titulo"
+                maxlength="150"
+                required
+                placeholder="Ej. Corte de agua programado">
+        </div>
+
+        <div>
+            <label for="contenido">Descripción del anuncio</label>
+            <textarea
+                id="contenido"
+                name="contenido"
+                rows="5"
+                required
+                placeholder="Escribe aquí los detalles del anuncio">
+            </textarea>
+        </div>
+
+        <div>
+            <label for="fecha_publicacion">Fecha de publicación</label>
+            <input
+                type="date"
+                id="fecha_publicacion"
+                name="fecha_publicacion"
+                required>
+        </div>
+
+        <div>
+            <label for="id_admin">ID del administrador</label>
+            <input
+                type="number"
+                id="id_admin"
+                name="id_admin"
+                min="1"
+                required
+                placeholder="Ingresa un ID válido">
+        </div>
+
+        <button type="submit" class="btn-search">
+            Guardar anuncio
+        </button>
+
+        <button
+            type="button"
+            class="btn-salir"
+            id="btn-cancelar-anuncio">
+            Cancelar
+        </button>
+    </form>
+
+    <p id="mensaje-formulario" role="status" aria-live="polite"></p>
+</section>
+
+
         </main>
 
         <footer class="site-footer">

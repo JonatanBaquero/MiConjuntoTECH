@@ -60,6 +60,18 @@ function mostrarAnuncios(lista) {
             crearCelda(anuncio.estado)
         );
 
+        const celdaAcciones = document.createElement("td");
+
+        const botonEliminar = document.createElement("button");
+        botonEliminar.type = "button";
+        botonEliminar.textContent = "Eliminar";
+        botonEliminar.className = "btn-eliminar";
+        botonEliminar.dataset.id = anuncio.id_anuncio;
+
+        celdaAcciones.appendChild(botonEliminar);
+        fila.appendChild(celdaAcciones);
+
+
         cuerpoTabla.appendChild(fila);
     });
 }
@@ -114,3 +126,112 @@ buscador.addEventListener("input", buscarAnuncios);
 
 // Carga inicial.
 cargarAnuncios();
+
+const btnMostrarFormulario = document.getElementById("btn-mostrar-formulario");
+const btnCancelarAnuncio = document.getElementById("btn-cancelar-anuncio");
+const seccionCrearAnuncio = document.getElementById("seccion-crear-anuncio");
+const formularioCrearAnuncio = document.getElementById("form-crear-anuncio");
+const mensajeFormulario = document.getElementById("mensaje-formulario");
+
+// Mostrar el formulario
+btnMostrarFormulario.addEventListener("click", () => {
+    seccionCrearAnuncio.hidden = false;
+    mensajeFormulario.textContent = "";
+});
+
+formularioCrearAnuncio.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    mensajeFormulario.textContent = "Guardando anuncio...";
+
+    const datos = {
+        titulo: document.getElementById("titulo").value.trim(),
+        contenido: document.getElementById("contenido").value.trim(),
+        fecha_publicacion: document.getElementById("fecha_publicacion").value,
+        id_admin: Number(document.getElementById("id_admin").value)
+    };
+
+    try {
+        const respuesta = await fetch(API_ANUNCIOS, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(
+                resultado.error || "No fue posible guardar el anuncio."
+            );
+        }
+
+        mensajeFormulario.textContent =
+            `¡Anuncio creado correctamente! Código: ${resultado.id_anuncio}`;
+
+        formularioCrearAnuncio.reset();
+
+        await cargarAnuncios();
+
+        // Ocultar el formulario después de guardar.
+        seccionCrearAnuncio.hidden = true;
+
+    } catch (error) {
+        console.error("Error al guardar el anuncio:", error);
+
+        mensajeFormulario.textContent =
+            error.message || "Ocurrió un error al guardar el anuncio.";
+    }
+});
+
+
+// Cancelar la creación del anuncio
+btnCancelarAnuncio.addEventListener("click", () => {
+    seccionCrearAnuncio.hidden = true;
+    formularioCrearAnuncio.reset();
+    mensajeFormulario.textContent = "";
+});
+
+cuerpoTabla.addEventListener("click", async (evento) => {
+    const boton = evento.target.closest(".btn-eliminar");
+
+    if (!boton) {
+        return;
+    }
+
+    const id = boton.dataset.id;
+
+    const confirmar = confirm(
+        `¿Estás seguro de que deseas eliminar el anuncio ${id}?`
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    boton.disabled = true;
+
+    try {
+        const respuesta = await fetch(`${API_ANUNCIOS}${id}`, {
+            method: "DELETE"
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(
+                resultado.error || "No se pudo eliminar el anuncio."
+            );
+        }
+
+        await cargarAnuncios();
+
+    } catch (error) {
+        console.error("Error al eliminar el anuncio:", error);
+        alert(error.message || "Ocurrió un error al eliminar el anuncio.");
+        boton.disabled = false;
+    }
+});
+
