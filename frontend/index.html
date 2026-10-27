@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anuncios - MiConjuntoTECH</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/anuncios.js" defer></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="img/logo-header.png" alt="Logo MiConjuntoTECH">
+            </a>
+        </div>
+
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="pqrs.html">PQRs</a></li>
+            <li><a href="anuncios.html">Anuncios</a></li>
+            <li><a href="usuarios.html">Usuarios</a></li>
+            <li><a href="documentos.html">Documentos</a></li>
+            <li><a href="mensajes.html">Mensajes</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <header class="site-header">
+            <h2>Bienvenido administrador: Jony</h2>
+
+            <div class="header-controls">
+                <a href="#" class="header-icon">
+                    <img src="img/avatar.png" alt="Cuenta">
+                </a>
+
+                <a href="#" class="header-icon">
+                    <img src="img/herramienta.png" alt="Herramientas">
+                </a>
+
+                <button class="btn-salir"
+                        onclick="alert('Salida del Sistema')">
+                    Salir
+                </button>
+            </div>
+        </header>
+
+        <main class="content">
+            <h1>Anuncios</h1>
+            <p>Anuncios y novedades principales</p>
+
+            <form class="search-container" id="form-busqueda">
+                <input
+                    type="search"
+                    id="anuncio-search"
+                    name="q"
+                    placeholder="Buscar por código o palabra clave..."
+                    aria-label="Buscar anuncios"
+                >
+
+                <button type="submit" class="btn-search">
+                    Buscar
+                </button>
+            </form>
+
+            <p id="mensaje-anuncios" role="status" aria-live="polite">
+                Cargando anuncios...
+            </p>
+
+            <div class="tabla-container-anuncios">
+                <table class="anuncios-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Anuncio</th>
+                            <th scope="col">Fecha de publicación</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="anuncios-body">
+                        <!-- JavaScript insertará aquí los anuncios de MySQL -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <button
+                    type="button"
+                    class="btn-salir"
+                    onclick="alert('La creación de anuncios se implementará en el siguiente paso.')">
+                    Crear anuncio
+                </button>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 MiConjuntoTECH, Todos los derechos reservados.</p>
+        </footer>
+    </div>
+</body>
+</html>
